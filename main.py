@@ -3,9 +3,16 @@ from difflib import get_close_matches as gcm
 
 data = json.load(open("data.json"))
 
+
 def get_value_by_key(key):
     if key in data.keys():
-        return str(data[key])
+        return data[key]
+
+    elif key.title() in data:
+        return data[key.title()]
+
+    elif key.upper() in data: 
+        return data[key.upper()]
             
     else:
         analog_key = gcm(key, data, n=1)
@@ -22,4 +29,9 @@ def get_value_by_key(key):
             
     
 word = input("enter the word: ")
-print(get_value_by_key(word.lower()))
+output = get_value_by_key(word.lower())
+if type(output) == list:
+    for item in output:
+        print(item)
+else:
+    print(output)
